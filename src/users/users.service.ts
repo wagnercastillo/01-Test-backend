@@ -51,22 +51,15 @@ export class UsersService {
   async findOne(term: string) {
     let user: User;
 
-    // Numero
-    if (!isNaN(+term)) {
-      user = await this.userModel.findOne({ no: term })
-    }
-
-    // Name 
     if (!user) {
-      user = await this.userModel.findOne({ name: term.toLocaleLowerCase().trim() })
+      user = await this.userModel.findOne({ name: term.trim() })
     }
 
-    // MongoID
     if (!user && isValidObjectId(term)) {
       user = await this.userModel.findById(term);
     }
 
-    if (!user) throw new NotFoundException(`User with id, name or no "${term}" no found`)
+    if (!user) throw new NotFoundException(`User with id, name "${term}" no found`)
 
     return user;
 
@@ -97,7 +90,7 @@ export class UsersService {
 
   async remove(id: string) {
     
-    const { deletedCount } = await this.userModel.deleteOne ({ __id: id  })
+    const { deletedCount } = await this.userModel.deleteOne ({ _id: id  })
     if ( deletedCount === 0 ){
       throw new BadRequestException(`User with id "${ id }" not found`)
     }

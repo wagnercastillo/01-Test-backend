@@ -5,69 +5,123 @@
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+# Imagine Apps
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Instrucciones de prueba tecnica:
 
-## Installation
+1) Crear una base de datos en mongo (local) llamada test-imagine y una colección con el nombre de products
 
-```bash
-$ npm install
+
+2) Insertar los registros en la colección products con el archivo "products.json"
+
+
+3) Crear un modelo de usuarios y una api en donde se puedan crear. El usuario debe de tener name, lastName, email, createdAt
+
+
+4) Agregar la api para actualizar productos agregando el usuario y cambiar el modelo para que esto sea válido (No se pueden sobreescribir los demás datos, solo agregar el usuario)
+
+
+5) Cambiar la api que lista todos los productos para que también aparezca su respectivo usuario. Preferible ejecutar las API en herramientas como postman.
+
+## Pasos para ejecutar en desarrollo 
+
+1. Clonar el repositorio
+2. Ejecutar ```npm install```
+3. Clonar el archivo __.env.template__ y renombrar la copia a __.env__
+4. Llenar las variables de entorno dentro de ```.env```
+5. Ejecutar la aplicación en dev:  ``` npm run start:dev```
+6. Reconstruir la base de datos con la semilla 
+```
+localhost:3000/api/seed
 ```
 
-## Running the app
+## Documentación de Postman
 
-```bash
-# development
-$ npm run start
+ - https://documenter.getpostman.com/view/16566391/2s93RNyEbZ
 
-# watch mode
-$ npm run start:dev
+---
 
-# production mode
-$ npm run start:prod
+## Peticiones Construidas 
+
+### Crud de Productos
+
+-  Post Product
+
+```
+localhost:3000/api/products
 ```
 
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```
+{
+    "name": "coca-cola", 
+    "price": 50,
+    "quantity": "500g"
+}
 ```
 
-## Support
+-  Get Products
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```
+localhost:3000/api/products
+```
 
-## Stay in touch
+``` 
+localhost:3000/api/products?limit=20&offset=10  
+```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Get Product and Update Product by Id or Name
 
-## License
+```
+localhost:3000/api/products/:Id
+```
 
-Nest is [MIT licensed](LICENSE).
+```
+localhost:3000/api/products/:Name
+```
+
+- Delete producto by Id 
+```
+localhost:3000/api/products/:Id
+```
+
+### Crud de Usuarios
+
+-  Post User
+
+```
+localhost:3000/api/user
+```
+
+```
+{
+    "name": "cristhoper",
+    "lastName": "castillo",
+    "email": "wagner.castillo@unl.edu.ec"
+}       
+```
+
+-  Get Users
+
+```
+localhost:3000/api/user
+```
+
+``` 
+localhost:3000/api/user?limit=20&offset=10  
+```
+
+- Get User and Update User by Id or Name
+
+```
+localhost:3000/api/user/:Id
+```
+
+```
+localhost:3000/api/user/:Name
+```
+
+- Delete User by Id 
+```
+localhost:3000/api/user/:Id
+```

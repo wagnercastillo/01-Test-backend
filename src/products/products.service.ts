@@ -15,33 +15,31 @@ export class ProductsService {
   constructor(
     @InjectModel(Product.name)
     private readonly productModel: Model<Product>,
-    private readonly configService:ConfigService
+    private readonly configService: ConfigService
 
-  ){
-
+  ) {
     this.defaultLimit = configService.get<number>('default_limit');
+  }
 
-  }  
-  
-  
+
   async create(createProductDto: CreateProductDto) {
 
     try {
-      
+
       const product = await this.productModel.create(createProductDto);
       return product;
 
     } catch (error) {
-      
+
       this.handleExceptions(error);
-      
+
     }
   }
 
- 
+
   findAll(paginationDto: PaginationDto) {
 
-    const { limit=this.defaultLimit, offset = 0 } = paginationDto;
+    const { limit = this.defaultLimit, offset = 0 } = paginationDto;
 
     return this.productModel.find()
       .populate('user', 'name')
@@ -56,22 +54,15 @@ export class ProductsService {
   async findOne(term: string) {
     let product: Product;
 
-    // Numero
-    if (!isNaN(+term)) {
-      product = await this.productModel.findOne({ no: term })
+     if (!product) {
+      product = await this.productModel.findOne({ name: term.trim() })
     }
 
-    // Name 
-    if (!product) {
-      product = await this.productModel.findOne({ name: term.toLocaleLowerCase().trim() })
-    }
-
-    // MongoID
     if (!product && isValidObjectId(term)) {
       product = await this.productModel.findById(term);
     }
 
-    if (!product) throw new NotFoundException(`Product with id, name or no "${term}" no found`)
+    if (!product) throw new NotFoundException(`Product with id, name "${term}" no found`)
 
     return product;
 
@@ -96,16 +87,16 @@ export class ProductsService {
     } catch (error) {
 
       this.handleExceptions(error);
-      
+
     }
 
   }
 
   async remove(id: string) {
-    
-    const { deletedCount } = await this.productModel.deleteOne ({ __id: id  })
-    if ( deletedCount === 0 ){
-      throw new BadRequestException(`Product with id "${ id }" not found`)
+
+    const { deletedCount } = await this.productModel.deleteOne({ _id: id })
+    if (deletedCount === 0) {
+      throw new BadRequestException(`Product with id "${id}" not found`)
     }
 
     return;
