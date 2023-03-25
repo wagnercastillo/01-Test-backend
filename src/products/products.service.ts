@@ -123,4 +123,9 @@ export class ProductsService {
 
 
   }
+
+  async deleteAllProducts(): Promise<any> {
+    return await this.productModel.deleteMany({});
+  }
+
 }

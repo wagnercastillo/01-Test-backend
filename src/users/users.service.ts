@@ -117,4 +117,9 @@ export class UsersService {
 
 
   }
+
+  async deleteAllProducts(): Promise<any> {
+    return await this.userModel.deleteMany({});
+  }
+
 }

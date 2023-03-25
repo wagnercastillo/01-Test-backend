@@ -5,9 +5,10 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Product, ProductSchema } from './entities/product.entity';
 
+
 @Module({
   controllers: [ProductsController],
-  providers: [ProductsService], 
+  providers: [ProductsService],
   imports: [
     ConfigModule,
     MongooseModule.forFeature([
@@ -15,6 +16,10 @@ import { Product, ProductSchema } from './entities/product.entity';
         name: Product.name,
         schema: ProductSchema,
       },
-    ])], 
+    ])],
+  exports: [
+    ProductsService,
+    MongooseModule
+  ]
 })
-export class ProductsModule {}
+export class ProductsModule { }
