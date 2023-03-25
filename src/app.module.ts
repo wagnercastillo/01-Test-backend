@@ -5,6 +5,7 @@ import { ProductsModule } from './products/products.module';
 import { ConfigModule } from '@nestjs/config';
 import { EnvConfiguration } from './config/env.config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { UsersModule } from './users/users.module';
 
 @Module({
 
@@ -15,6 +16,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     }),   
     ProductsModule,
     MongooseModule.forRoot( process.env.MONGODB ),
+    UsersModule,
   
   ],
 

@@ -15,6 +15,6 @@ export class CreateProductDto {
     @IsDate()
     @IsOptional()
     createAt: Date;
-    
-    
+
+
 }

@@ -44,6 +44,7 @@ export class ProductsService {
     const { limit=this.defaultLimit, offset = 0 } = paginationDto;
 
     return this.productModel.find()
+      .populate('user', 'name')
       .limit(limit)
       .skip(offset)
       .sort({
@@ -70,7 +71,7 @@ export class ProductsService {
       product = await this.productModel.findById(term);
     }
 
-    if (!product) throw new NotFoundException(`Pokemon with id, name or no "${term}" no found`)
+    if (!product) throw new NotFoundException(`Product with id, name or no "${term}" no found`)
 
     return product;
 
@@ -104,7 +105,7 @@ export class ProductsService {
     
     const { deletedCount } = await this.productModel.deleteOne ({ __id: id  })
     if ( deletedCount === 0 ){
-      throw new BadRequestException(`Pokemon with id "${ id }" not found`)
+      throw new BadRequestException(`Product with id "${ id }" not found`)
     }
 
     return;
@@ -115,10 +116,10 @@ export class ProductsService {
   private handleExceptions(error: any) {
 
     if (error.code === 11000) {
-      throw new BadRequestException(`Pokemon exists in DB ${JSON.stringify(error.keyValue)}`)
+      throw new BadRequestException(`Product exists in DB ${JSON.stringify(error.keyValue)}`)
     }
     console.log(error)
-    throw new InternalServerErrorException(`Cant create Pokemon - Check server logs`)
+    throw new InternalServerErrorException(`Cant create Product - Check server logs`)
 
 
   }
